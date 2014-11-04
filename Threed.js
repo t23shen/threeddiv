@@ -7,7 +7,8 @@ var Threed = {};
             backgroundcolor: "rgba(127, 202, 255, 0.3)",
             opacity: 0.5,
             thickness: 30,
-            background_image:""
+            background_image:"",
+            back_cover:false
         }
 
         $.extend(this.options,o);
@@ -23,10 +24,12 @@ var Threed = {};
         var color =  this.options.backgroundcolor;
         var boxopacity = this.options.opacity;
         var thickness = this.options.thickness;
+        var isbackcovered = this.options.back_cover;
         var sides = ["left","right","top","bottom","back","cover","front"];
         var wrapperstate={  width:contentWidth,
                             height:contentHeight
                           };
+        var title = $content.find("h2").text();
         // Defining Customized HTML elements
         var cubewrapper = $('<div></div>')
                         .addClass("cubewrapper_"+index)
@@ -46,7 +49,7 @@ var Threed = {};
         var right = $('<div></div>').addClass("right").appendTo(cubewrapper);
         var top = $('<div></div>').addClass("top").appendTo(cubewrapper);
         var bottom = $('<div></div>').addClass("bottom").appendTo(cubewrapper);
-        var back = $('<div></div>').addClass("back").appendTo(cubewrapper);
+        var back = $('<div><h3></h3></div>').addClass("back").appendTo(cubewrapper);
         var cover = $('<div></div>').addClass("cover").appendTo(cubewrapper);
 
         // Adding CSS attributes foreach side
@@ -98,6 +101,10 @@ var Threed = {};
                 case "back":
                     transform = "translateZ("+(-thickness)+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(180deg)";
                     transform_origin = "center";
+                    if(isbackcovered){
+                        opacity = 0.9;
+                        $content.find("h3").text(title);
+                    }
                     break;
                 case "cover":
                     transform = "translateY("+(-contentHeight-margin_bottom)+"px)";

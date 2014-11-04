@@ -6,7 +6,7 @@
   transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }
 .hover{
-  transform:rotateY(360deg) rotateZ(0deg) scale(1);
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
 }
 .right{
   position: absolute;
@@ -30,7 +30,7 @@
 .front{
   transform: translateZ(-15px) rotateZ(0deg);
 }
-.back h2{
+.back h3{
   position: relative;
   left: 320px;
   top: 100px;
