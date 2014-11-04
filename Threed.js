@@ -49,7 +49,10 @@ var Threed = {};
         var right = $('<div></div>').addClass("right").appendTo(cubewrapper);
         var top = $('<div></div>').addClass("top").appendTo(cubewrapper);
         var bottom = $('<div></div>').addClass("bottom").appendTo(cubewrapper);
-        var back = $('<div><h3></h3></div>').addClass("back").appendTo(cubewrapper);
+        var back = $('<div></div>').addClass("back").appendTo(cubewrapper);
+        if(isbackcovered){
+            $('<h3>'+title+'</h3>').appendTo(back);
+        }
         var cover = $('<div></div>').addClass("cover").appendTo(cubewrapper);
 
         // Adding CSS attributes foreach side
@@ -102,8 +105,10 @@ var Threed = {};
                     transform = "translateZ("+(-thickness)+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(180deg)";
                     transform_origin = "center";
                     if(isbackcovered){
-                        opacity = 0.9;
-                        $content.find("h3").text(title);
+                        opacity = 0.95;
+                        backgroundcolor = "rgba(127, 202, 255, 0.95)";
+                        $(selector+space+"h3").css("left",width/2);
+                        $(selector+space+"h3").css("top",height/2);
                     }
                     break;
                 case "cover":
