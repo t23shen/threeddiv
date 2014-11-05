@@ -1,12 +1,12 @@
 .initstate{
   position:relative;
   transform-style:preserve-3d;
-  margin-bottom:30px;
+  margin-bottom:20px;
   transition:transform 1.5s ease-in-out;
-  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
 }
 .hover{
-  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+  transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }
 .right{
   position: absolute;
@@ -32,9 +32,7 @@
 }
 .back h3{
   position: relative;
-  left: 320px;
-  top: 100px;
-  font-size: 50px;
+  font-size: 48px;
 }
 .cover{
   position: absolute;

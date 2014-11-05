@@ -105,10 +105,11 @@ var Threed = {};
                     transform = "translateZ("+(-thickness)+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(180deg)";
                     transform_origin = "center";
                     if(isbackcovered){
-                        opacity = 0.95;
-                        backgroundcolor = "rgba(127, 202, 255, 0.95)";
-                        $(selector+space+"h3").css("left",width/2);
-                        $(selector+space+"h3").css("top",height/2);
+                        var innerHeight = $(selector+space+"h3").innerHeight(); 
+                        opacity = 1;
+                        backgroundcolor = "rgba(127, 202, 255, 0.96)";
+                        $(selector+space+"h3").css("text-align","center");
+                        $(selector+space+"h3").css("top",(height/2)-innerHeight);
                     }
                     break;
                 case "cover":
