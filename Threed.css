@@ -1,12 +1,12 @@
 .initstate{
   position:relative;
   transform-style:preserve-3d;
-  margin-bottom:20px;
+  margin-bottom:30px;
   transition:transform 1.5s ease-in-out;
-  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+  transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }
 .hover{
-  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
 }
 .right{
   position: absolute;

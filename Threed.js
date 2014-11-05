@@ -8,7 +8,8 @@ var Threed = {};
             opacity: 0.5,
             thickness: 30,
             background_image:"",
-            back_cover:false
+            back_cover:false,
+            link_item:false;
         }
 
         $.extend(this.options,o);
@@ -30,39 +31,46 @@ var Threed = {};
                             height:contentHeight
                           };
         var title = $content.find("h2").text();
-        // Defining Customized HTML elements
-        var cubewrapper = $('<div></div>')
+        var cubewrapper;
+
+        _initSides();
+        _initEvents();
+
+        function _initSides(){
+
+            // Defining Customized HTML elements
+            cubewrapper = $('<div></div>')
                         .addClass("cubewrapper_"+index)
                         .addClass("initstate")
                         .attr("index", index)
                         .css(wrapperstate);
 
-        if($content.prev().length){
-            cubewrapper.insertAfter($content.prev());
-        }else{
-            cubewrapper.prependTo($parent);
-        }         
+            if($content.prev().length){
+                cubewrapper.insertAfter($content.prev());
+            }else{
+                cubewrapper.prependTo($parent);
+            }         
 
-        $content.appendTo(cubewrapper);
-        $content.addClass("front");                
-        var left = $('<div></div>').addClass("left").appendTo(cubewrapper);
-        var right = $('<div></div>').addClass("right").appendTo(cubewrapper);
-        var top = $('<div></div>').addClass("top").appendTo(cubewrapper);
-        var bottom = $('<div></div>').addClass("bottom").appendTo(cubewrapper);
-        var back = $('<div></div>').addClass("back").appendTo(cubewrapper);
-        if(isbackcovered){
-            $('<h3>'+title+'</h3>').appendTo(back);
+            $content.appendTo(cubewrapper);
+            $content.addClass("front");                
+            var left = $('<div></div>').addClass("left").appendTo(cubewrapper);
+            var right = $('<div></div>').addClass("right").appendTo(cubewrapper);
+            var top = $('<div></div>').addClass("top").appendTo(cubewrapper);
+            var bottom = $('<div></div>').addClass("bottom").appendTo(cubewrapper);
+            var back = $('<div></div>').addClass("back").appendTo(cubewrapper);
+            if(isbackcovered){
+                $('<h3>'+title+'</h3>').appendTo(back);
+            }
+            var cover = $('<div></div>').addClass("cover").appendTo(cubewrapper);
+            // Adding CSS attributes foreach side
+            for(var i=0;i<sides.length;i++){
+                _addcss(sides[i]);
+            }
         }
-        var cover = $('<div></div>').addClass("cover").appendTo(cubewrapper);
-
-        // Adding CSS attributes foreach side
-        for(var i=0;i<sides.length;i++){
-            _addcss(sides[i]);
-        }
-
-        _initEvents();
 
         function _initEvents(){
+
+            // Adding transition when hover
             cubewrapper.hover(function(){
                 $(this).addClass("hover");
             },function(){
@@ -132,4 +140,9 @@ var Threed = {};
             $(selector).css("transform-origin",transform_origin);
         }
     }
+
+    Threed.addGroupThreed = function(o){
+
+    }
+    
 })(jQuery,Threed);
