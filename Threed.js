@@ -9,7 +9,7 @@ var Threed = {};
             thickness: 30,
             background_image:"",
             back_cover:false,
-            link_item:false;
+            link_item:false
         }
 
         $.extend(this.options,o);
@@ -29,12 +29,17 @@ var Threed = {};
         var sides = ["left","right","top","bottom","back","cover","front"];
         var wrapperstate={  width:contentWidth,
                             height:contentHeight
-                          };
+                         };
         var title = $content.find("h2").text();
+        var linkitem = this.options.link_item;
         var cubewrapper;
 
         _initSides();
         _initEvents();
+
+        if(linkitem){
+            return cubewrapper;
+        }
 
         function _initSides(){
 
@@ -142,7 +147,59 @@ var Threed = {};
     }
 
     Threed.addGroupThreed = function(o){
+       this.options={
+            selector:null,
+            backgroundcolor: "rgba(127, 202, 255, 0.3)",
+            opacity: 0.5,
+            thickness: 30,
+            background_image:"",
+            back_cover:false,
+            link_item:false
+        }
 
+        $.extend(this.options,o);
+
+        // Defining jQuery Objects
+        $content = $(this.options.selector);
+        $parent = $content.parent();
+        $items = $(this.options.selector+" .item");
+
+
+        // Defining Global Variables
+        var index = $("[class^='cubegroup']").length;
+        var cubegroup = $('<div></div>')
+                        .addClass("cubegroup_"+index);
+
+        for(var i=1;i<$items.length;i++){
+            var sectioncontainer = $('<section></section>').addClass("subsection").addClass("subsection_"+i);
+            var sectioninner = $('<div></div>').addClass("subsection-inner");
+            var contentcontainer = $('<div></div>').addClass("content");
+
+            contentcontainer.appendTo(sectioninner);
+            sectioninner.appendTo(sectioncontainer);
+            $items.eq(i).appendTo(contentcontainer);
+            sectioncontainer.appendTo(cubegroup);
+        }
+        if($content.prev().length){
+            cubegroup.insertAfter($content.prev());
+        }else{
+            cubegroup.prependTo($parent);
+        }
+        $content.prependTo(cubegroup);
+        $(this.options.selector+" .divider").remove();
+
+        // Rendering cubes
+        Threed.addThreed(this.options);
+
+        for(var i=1;i<$items.length;i++){
+            this.options.selector = ".cubegroup_"+index+" ."+"subsection_"+i;
+            Threed.addThreed(this.options);
+            addCubeLinker($(this.options.selector).parent());
+        }
+
+        function addCubeLinker(item){
+            $('<div></div>').addClass('cubelinker').insertBefore(item);
+        }
     }
-    
+
 })(jQuery,Threed);
