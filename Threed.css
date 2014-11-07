@@ -2,17 +2,17 @@
   position:relative;
   transform-style:preserve-3d;
   margin-bottom:30px;
-  transition:transform 1.5s ease-in-out;
+  transition:transform 1.5s ease-in;
   transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }
 .hover{
-  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+  transform:rotateY(180deg) rotateZ(0deg) scale(1.2);
 }
-.right{
+.right, .right_link{
   position: absolute;
   transform-origin: left;
 }
-.left{
+.left, .left_link{
   position: absolute;
   transform-origin: left;
 }
@@ -24,7 +24,7 @@
   position: absolute;
   transform-origin: top;
 }
-.back{
+.back, ._back_link{
   position: absolute;
 }
 .front{
@@ -34,7 +34,7 @@
   position: relative;
   font-size: 48px;
 }
-.cover{
+.cover, .front_link{
   position: absolute;
   background: url(../images/white_lens_flare.png) bottom right no-repeat, url(../images/lens-flare.png) -230px 0px no-repeat;
   transform-origin: center;
@@ -51,4 +51,14 @@
 }
 .subsection .item{
 
+}
+.connector{
+  height:0;
+  transform-style:preserve-3d;
+  transition:transform 1.5s ease-in; !important
+  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+}
+.groupstate{
+  transform:rotateY(0deg) rotateZ(0deg) scale(0.6);
+  transition:transform 1s ease-in; !important
 }
