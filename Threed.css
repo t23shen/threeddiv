@@ -2,11 +2,12 @@
   position:relative;
   transform-style:preserve-3d;
   margin-bottom:30px;
-  transition:transform 1.5s ease-in;
-  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  transition:transform 1s ease-in;
+  transform-origin:top center;
+  transform:rotateY(180deg) rotateZ(0deg) scale(0.6);
 }
 .hover{
-  transform:rotateY(180deg) rotateZ(0deg) scale(1.2);
+  transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }
 .right, .right_link{
   position: absolute;
@@ -55,10 +56,27 @@
 .connector{
   height:0;
   transform-style:preserve-3d;
-  transition:transform 1.5s ease-in; !important
-  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  transition:transform 1s ease-in; 
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
 }
-.groupstate{
+
+/*Cube Group CSS*/
+.containerstate{
+  position: relative;
+  transform-origin:top;
   transform:rotateY(0deg) rotateZ(0deg) scale(0.6);
-  transition:transform 1s ease-in; !important
+  transition:transform 1s ease-in;
+}
+.containerhover{
+    transform:scale(1);
+}
+.groupinitstate{
+  position:relative;
+  transform-style:preserve-3d;
+  margin-bottom:30px;
+  transition:transform 1s ease-in;
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+}
+.grouphover{
+    transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }

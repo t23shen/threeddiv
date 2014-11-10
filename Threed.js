@@ -9,6 +9,7 @@ var Threed = {};
             thickness: 30,
             background_image:"",
             back_cover:false,
+            initCSS: "initstate",
             link_item:false
         }
 
@@ -27,6 +28,8 @@ var Threed = {};
         var thickness = this.options.thickness;
         var isbackcovered = this.options.back_cover;
         var linkitem = this.options.link_item;
+        var initCSSClass = this.options.initCSS;
+
         var sides = ["left","right","top","bottom","back","cover","front"];
         var wrapperstate={  width:contentWidth,
                             height:contentHeight
@@ -46,7 +49,7 @@ var Threed = {};
             // Defining Customized HTML elements
             cubewrapper = $('<div></div>')
                         .addClass(wrapperclass)
-                        .addClass("initstate")
+                        .addClass(initCSSClass)
                         .attr("index", index)
                         .css(wrapperstate);
 
@@ -217,6 +220,7 @@ var Threed = {};
             thickness: 30,
             background_image:"",
             back_cover:false,
+            initCSS: "groupinitstate",
             link_item:false
         }
 
@@ -232,7 +236,7 @@ var Threed = {};
         var index = $("[class^='cubegroup']").length;
         var cubegroup = $('<div></div>')
                         .addClass("cubegroup_"+index)
-                        .addClass("groupstate");
+                        .addClass("containerstate");
 
         // Initialize HTML structure
         for(var i=1;i<$items.length;i++){
@@ -265,23 +269,21 @@ var Threed = {};
         // Binding events
         cubegroup.children().eq(0).unbind(); // Unbind first div event
         cubegroup.hover(function(){
-                $(this).addClass("hover");
+               $(this).addClass("containerhover");
             },function(){
-                $(this).removeClass("hover");
+                $(this).removeClass("containerhover");
         });
-       // cubegroup.css("transition","transform 1s ease-in");
+
         var transitionduration = 1;
         cubegroup.children().each(function(index,element){
             cubegroup.hover(function(){
-                $(element).addClass("hover");
+                $(element).addClass("grouphover");
             },function(){
-                $(element).removeClass("hover");
+                $(element).removeClass("grouphover");
             });
             $(element).css("transition","transform "+transitionduration+"s ease-in");
             transitionduration +=0.1;
         });
-
-
     }
 
 })(jQuery,Threed);
