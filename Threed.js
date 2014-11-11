@@ -87,9 +87,12 @@ var Threed = {};
                   },
                   mouseenter: function() {
                     $(this).addClass("hover");
+                    $(this).css("z-index",1000);
                   },
                   mouseleave: function() {
                     $(this).removeClass("hover");
+                    $(this).css("z-index",999);
+
                   }
                 });
             }
@@ -269,21 +272,92 @@ var Threed = {};
         // Binding events
         cubegroup.children().eq(0).unbind(); // Unbind first div event
         cubegroup.hover(function(){
-               $(this).addClass("containerhover");
+                $(this).addClass("containerhover");
+                $(this).css("z-index",1000);
             },function(){
                 $(this).removeClass("containerhover");
+                $(this).css("z-index",999);
+
         });
 
         var transitionduration = 1;
         cubegroup.children().each(function(index,element){
             cubegroup.hover(function(){
                 $(element).addClass("grouphover");
+                $(this).css("z-index",1000);
             },function(){
                 $(element).removeClass("grouphover");
+                $(this).css("z-index",999);
             });
             $(element).css("transition","transform "+transitionduration+"s ease-in");
             transitionduration +=0.1;
         });
     }
 
+    Threed.addFormat = function(o){
+        this.options={
+            container_selector:null,
+            back_flip:false,
+            scale:0.6
+        }
+
+        $.extend(this.options,o);
+
+        // Defining global variables
+        var containerClass = this.options.container_selector;
+        var containerWidth = $(containerClass).outerWidth();
+        var scale = this.options.scale;
+        var middleSpace = 5;//px
+        var elementSpace = 3;//px
+        var elementTopSpace = 0;
+        var elementPrevHeight;
+        var originPos = {
+            "left":{},
+            "right":{}
+        }
+
+        // Defining jQuery Objects
+        $leftColumn = $(containerClass+' .primary');
+        $rightColumn = $(containerClass+' .secondary');
+
+        // Calculate left and right width to center the elements
+        var leftElementWidth = ($leftColumn.children().eq(0).width())*scale;
+        var rightElementWidth = ($rightColumn.children().eq(0).width())*scale;
+        var spaceWidth = (containerWidth-(leftElementWidth+rightElementWidth))/2;
+
+        // Assume all elements have equal width and aligned
+        var leftElementOffset=(spaceWidth-$leftColumn.children().eq(0).position().left)-middleSpace;
+        var rightElementOffset=(spaceWidth-($rightColumn.outerWidth()-$rightColumn.children().eq(0).position().left-rightElementWidth))-middleSpace;
+ 
+        // Correcting ELement's positions
+        $leftColumn.children().each(function(index,element){
+            var classname = $(element).attr("class").split(" ")[0];
+            originPos.left[classname] = $(element).offset();
+
+            var elementPositionTop = $(element).position().top;
+            // First element
+            if(elementPositionTop!=0){
+                elementTopSpace= elementTopSpace+elementPrevHeight+elementSpace;
+                $(element).css("top",-(elementPositionTop-elementTopSpace));
+            }
+            elementPrevHeight = $(element).height()*scale;
+            $(element).css("left",leftElementOffset);
+        });
+
+        elementTopSpace = 0; //Reset variable to 0
+        $rightColumn.children().each(function(index,element){
+            var classname = $(element).attr("class").split(" ")[0];
+            originPos.right[classname] = $(element).offset();
+
+            var elementPositionTop = $(element).position().top;
+            // First element
+            if(elementPositionTop!=0){
+                elementTopSpace=elementTopSpace+elementPrevHeight+elementSpace;
+                $(element).css("top",-(elementPositionTop-elementTopSpace));
+            }
+            elementPrevHeight = $(element).height()*scale;
+            $(element).css("right",rightElementOffset);
+        });
+
+    }
 })(jQuery,Threed);
