@@ -360,4 +360,39 @@ var Threed = {};
         });
 
     }
+
+    Threed.addSideWalls = function(o){
+        this.options={
+            container_selector:null,
+            middle_space:5,
+            scale:0.6
+        }
+
+        $.extend(this.options,o);
+        $body = $("body");
+        
+        // Defining global variables
+        var containerClass = this.options.container_selector;
+        var scale = this.options.scale;
+        var middleSpace = this.options.middle_space;
+        var leftElementWidth = $(containerClass+' .primary').children().eq(0).width();
+        var rightElementWidth = $(containerClass+' .secondary').children().eq(0).width();
+        var leftRealWidth = leftElementWidth*scale;
+        var rightRealWidth = rightElementWidth*scale;
+
+        var wallWidth = ($body.width()-$(containerClass+" .row").width())/2;
+        var wallHeight = $(containerClass+" .row").height();
+        var wallLength = ((leftElementWidth+rightElementWidth+middleSpace*2)-(leftRealWidth+rightRealWidth))/2
+
+        $("<div></div>").addClass("left-wall").css({width:wallWidth,
+                                                    height:wallHeight
+                                                    }).insertAfter($(".header"));
+        $("<div></div>").addClass("right-wall").css({width:wallWidth,
+                                                    height:wallHeight
+                                                    }).insertAfter($(".header"));
+        // Positioning
+
+        Threed.addThreed({selector:".left-wall",thickness:wallLength});
+        //Threed.addThreed({selector:".right-wall",thickness:wallLength});
+    }
 })(jQuery,Threed);
