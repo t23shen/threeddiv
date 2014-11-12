@@ -96,3 +96,14 @@
   float: right;
   background-color: lightblue;
 }
+.wallstate{
+  position:relative;
+  transform-style:preserve-3d;
+  margin-bottom:30px;
+  transition:transform 1s ease-in;
+  transform-origin:left;
+  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+}
+.wallhover{
+    transform:rotateY(-90deg) rotateZ(0deg) scale(1);
+}

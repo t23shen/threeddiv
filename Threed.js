@@ -10,7 +10,8 @@ var Threed = {};
             background_image:"",
             back_cover:false,
             initCSS: "initstate",
-            link_item:false
+            link_item:false,
+            cube_wall:false
         }
 
         $.extend(this.options,o);
@@ -29,6 +30,7 @@ var Threed = {};
         var isbackcovered = this.options.back_cover;
         var linkitem = this.options.link_item;
         var initCSSClass = this.options.initCSS;
+        var iscubewall = this.options.cube_wall;
 
         var sides = ["left","right","top","bottom","back","cover","front"];
         var wrapperstate={  width:contentWidth,
@@ -80,6 +82,21 @@ var Threed = {};
             // Adding transition when hover
             if(linkitem){
 
+            }else if(iscubewall){
+                cubewrapper.bind({
+                  click: function() {
+                    //$( this ).addClass( "active" );
+                  },
+                  mouseenter: function() {
+                    $(this).addClass("wallhover");
+                    $(this).css("z-index",1000);
+                  },
+                  mouseleave: function() {
+                    $(this).removeClass("wallhover");
+                    $(this).css("z-index",999);
+
+                  }
+                });
             }else{
                 cubewrapper.bind({
                   click: function() {
@@ -139,26 +156,26 @@ var Threed = {};
             switch(className){
                 case "left":
                     width = thickness;
-                    transform = "translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(90deg)";
+                    transform = iscubewall? "rotateY(90deg)":"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(90deg)";
                     transform_origin = "left";
                     break;
                 case "right":
                     width = thickness;
-                    transform = "translateX("+contentWidth+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(90deg)";
+                    transform = iscubewall? "translateX("+contentWidth+"px)"+space+"rotateY(90deg)":"translateX("+contentWidth+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(90deg)";
                     transform_origin = "left";
                     break;
                 case "top":
                     height = thickness;
-                    transform = "translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateX(-90deg)";
+                    transform = iscubewall? "rotateX(-90deg)":"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateX(-90deg)";
                     transform_origin = "top";
                     break;
                 case "bottom":
                     height = thickness;
-                    transform = "translateY("+(-margin_bottom)+"px)"+space+"rotateX(-90deg)";
+                    transform = iscubewall? "translateY("+(contentHeight)+"px)"+space+"rotateX(-90deg)":"translateY("+(-margin_bottom)+"px)"+space+"rotateX(-90deg)";
                     transform_origin = "top";
                     break;
                 case "back":
-                    transform = "translateZ("+(-thickness)+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(180deg)";
+                    transform = iscubewall? "translateZ("+(-thickness)+"px)"+space+"rotateY(180deg)":"translateZ("+(-thickness)+"px)"+space+"translateY("+(-contentHeight-margin_bottom)+"px)"+space+"rotateY(180deg)";
                     transform_origin = "center";
                     if(isbackcovered){
                         var innerHeight = $(selector+space+"h3").innerHeight(); 
@@ -169,13 +186,17 @@ var Threed = {};
                     }
                     break;
                 case "cover":
-                    transform = "translateY("+(-contentHeight-margin_bottom)+"px)";
+                    transform = iscubewall? "":"translateY("+(-contentHeight-margin_bottom)+"px)";
                     transform_origin = "center";
                     break;
                 case "front":
                     // Transform the content into the cube
-                    transform = "translateZ("+(-thickness/2)+"px)";
-                    $(selector).css("transform",transform);
+                    if(iscubewall){
+                        $(selector).hide();
+                    }else{
+                        transform = "translateZ("+(-thickness/2)+"px)";
+                        $(selector).css("transform",transform);
+                    }
                     return;
 
                 // These Classes are for connectors between main div and sub divs
@@ -365,7 +386,10 @@ var Threed = {};
         this.options={
             container_selector:null,
             middle_space:5,
-            scale:0.6
+            scale:0.6,
+            cube_wall:true,
+            initCSS:"wallstate",
+            thickness:0
         }
 
         $.extend(this.options,o);
@@ -391,8 +415,9 @@ var Threed = {};
                                                     height:wallHeight
                                                     }).insertAfter($(".header"));
         // Positioning
-
-        Threed.addThreed({selector:".left-wall",thickness:wallLength});
+        this.options.selector=".left-wall";
+        this.options.thickness=wallLength;
+        Threed.addThreed(this.options);
         //Threed.addThreed({selector:".right-wall",thickness:wallLength});
     }
 })(jQuery,Threed);
