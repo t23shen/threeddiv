@@ -12,14 +12,23 @@
 .right, .right_link{
   position: absolute;
   transform-origin: left;
+    border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 .left, .left_link{
   position: absolute;
   transform-origin: left;
+    border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 .top{
   position: absolute;
   transform-origin: top;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 .bottom{
   position: absolute;
@@ -27,9 +36,6 @@
 }
 .back, .back_link{
   position: absolute;
-  /*border-style: solid;
-  border-color: black;
-  border-width: 1px;*/
 }
 .front{
   transform: translateZ(-15px) rotateZ(0deg);
@@ -42,6 +48,9 @@
   position: absolute;
   background: url(../images/white_lens_flare.png) bottom right no-repeat, url(../images/lens-flare.png) -230px 0px no-repeat;
   transform-origin: center;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
 }
 .subsection {
   margin-bottom: 30px;
@@ -84,26 +93,37 @@
     transform:rotateY(0deg) rotateZ(0deg) scale(1);
 }
 .left-wall{
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
-  position: relative;
   float: left;
   background-color: lightblue;
 }
 .right-wall{
-  position: relative;
   float: right;
   background-color: lightblue;
 }
-.wallstate{
-  position:relative;
+.leftstate{
+  position:absolute;
+  display:inline-block;
+  left:0;
   transform-style:preserve-3d;
-  margin-bottom:30px;
   transition:transform 1s ease-in;
   transform-origin:left;
-  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  transform:rotateX(0deg) rotateY(-22deg) rotateZ(0deg) scale(1);
+  z-index:-1;
+  perspective: 2000px;
+  perspective-origin: 171% -5%;
+}
+.rightstate{
+  position:absolute;
+  display:inline-block;
+  right:0;
+  transform-style:preserve-3d;
+  transition:transform 1s ease-in;
+  transform-origin:right;
+  transform:rotateX(0deg) rotateY(22deg) rotateZ(0deg) scale(1);
+  z-index:-1;
+  perspective: 2000px;
+  perspective-origin: -73% -5%;
 }
 .wallhover{
-    transform:rotateY(-90deg) rotateZ(0deg) scale(1);
+    /*transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);*/
 }

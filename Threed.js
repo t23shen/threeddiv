@@ -328,7 +328,7 @@ var Threed = {};
         var containerClass = this.options.container_selector;
         var containerWidth = $(containerClass).outerWidth();
         var scale = this.options.scale;
-        var middleSpace = 5;//px
+        var middleSpace = 3;//px
         var elementSpace = 3;//px
         var elementTopSpace = 0;
         var elementPrevHeight;
@@ -350,7 +350,7 @@ var Threed = {};
         var leftElementOffset=(spaceWidth-$leftColumn.children().eq(0).position().left)-middleSpace;
         var rightElementOffset=(spaceWidth-($rightColumn.outerWidth()-$rightColumn.children().eq(0).position().left-rightElementWidth))-middleSpace;
  
-        // Correcting ELement's positions
+        // Correcting Left and Right ELement's positions
         $leftColumn.children().each(function(index,element){
             var classname = $(element).attr("class").split(" ")[0];
             originPos.left[classname] = $(element).offset();
@@ -363,6 +363,26 @@ var Threed = {};
             }
             elementPrevHeight = $(element).height()*scale;
             $(element).css("left",leftElementOffset);
+
+            //rebind events
+            $(element).unbind().bind({
+                  click: function() {
+                    //$( this ).addClass( "active" );
+                  },
+                  mouseenter: function() {
+                    $(this).addClass("hover");
+                    $(this).css("transform","translateX("+(-leftElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
+                    //$(this).css("left",-leftElementOffset);
+                    $(this).css("z-index",1000);
+                  },
+                  mouseleave: function() {
+                    //$(this).removeClass("hover");
+                    // $(this).css("left",leftElementOffset)
+                    $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
+                    $(this).css("z-index",999);
+
+                  }
+                });
         });
 
         elementTopSpace = 0; //Reset variable to 0
@@ -378,6 +398,26 @@ var Threed = {};
             }
             elementPrevHeight = $(element).height()*scale;
             $(element).css("right",rightElementOffset);
+
+                        //rebind events
+            $(element).unbind().bind({
+                  click: function() {
+                    //$( this ).addClass( "active" );
+                  },
+                  mouseenter: function() {
+                    $(this).addClass("hover");
+                    $(this).css("transform","translateX("+(rightElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
+                    //$(this).css("left",-leftElementOffset);
+                    $(this).css("z-index",1000);
+                  },
+                  mouseleave: function() {
+                    //$(this).removeClass("hover");
+                    // $(this).css("left",leftElementOffset)
+                    $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
+                    $(this).css("z-index",999);
+
+                  }
+                });
         });
 
     }
@@ -388,7 +428,7 @@ var Threed = {};
             middle_space:5,
             scale:0.6,
             cube_wall:true,
-            initCSS:"wallstate",
+            initCSS:"",
             thickness:0
         }
 
@@ -404,20 +444,23 @@ var Threed = {};
         var leftRealWidth = leftElementWidth*scale;
         var rightRealWidth = rightElementWidth*scale;
 
-        var wallWidth = ($body.width()-$(containerClass+" .row").width())/2;
+        var wallWidth = 30+middleSpace+($body.width()-$(containerClass+" .row").width())/2;
         var wallHeight = $(containerClass+" .row").height();
         var wallLength = ((leftElementWidth+rightElementWidth+middleSpace*2)-(leftRealWidth+rightRealWidth))/2
 
         $("<div></div>").addClass("left-wall").css({width:wallWidth,
                                                     height:wallHeight
-                                                    }).insertAfter($(".header"));
+                                                    }).prependTo($(containerClass));
         $("<div></div>").addClass("right-wall").css({width:wallWidth,
                                                     height:wallHeight
-                                                    }).insertAfter($(".header"));
+                                                    }).prependTo($(containerClass));
         // Positioning
+        this.options.initCSS="leftstate";
         this.options.selector=".left-wall";
-        this.options.thickness=wallLength;
+        this.options.thickness=800;
         Threed.addThreed(this.options);
-        //Threed.addThreed({selector:".right-wall",thickness:wallLength});
+        this.options.initCSS="rightstate";
+        this.options.selector=".right-wall";
+        Threed.addThreed(this.options);
     }
 })(jQuery,Threed);
