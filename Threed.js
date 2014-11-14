@@ -425,7 +425,7 @@ var Threed = {};
     Threed.addSideWalls = function(o){
         this.options={
             container_selector:null,
-            middle_space:5,
+            middle_space:3,
             scale:0.6,
             cube_wall:true,
             initCSS:"",
@@ -444,9 +444,10 @@ var Threed = {};
         var leftRealWidth = leftElementWidth*scale;
         var rightRealWidth = rightElementWidth*scale;
 
-        var wallWidth = 30+middleSpace+($body.width()-$(containerClass+" .row").width())/2;
+        var wallWidth = ($body.width()-$(containerClass+" .row").width())/2;
         var wallHeight = $(containerClass+" .row").height();
-        var wallLength = ((leftElementWidth+rightElementWidth+middleSpace*2)-(leftRealWidth+rightRealWidth))/2
+        var wallLength = 800;
+        var rotateY = Math.atan((($(containerClass+" .row").width()-(leftRealWidth+rightRealWidth+middleSpace*2))/2)/wallLength)*(180/Math.PI);
 
         $("<div></div>").addClass("left-wall").css({width:wallWidth,
                                                     height:wallHeight
@@ -457,10 +458,14 @@ var Threed = {};
         // Positioning
         this.options.initCSS="leftstate";
         this.options.selector=".left-wall";
-        this.options.thickness=800;
+        this.options.thickness=wallLength;                             
         Threed.addThreed(this.options);
         this.options.initCSS="rightstate";
         this.options.selector=".right-wall";
         Threed.addThreed(this.options);
+
+        $('.leftstate').css("transform","rotateX(5deg) rotateY("+(-rotateY)+"deg)");
+        $('.rightstate').css("transform","rotateX(5deg) rotateY("+rotateY+"deg)");
+
     }
 })(jQuery,Threed);

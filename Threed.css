@@ -12,23 +12,17 @@
 .right, .right_link{
   position: absolute;
   transform-origin: left;
-    border-style: solid;
-  border-color: black;
-  border-width: 1px;
+
 }
 .left, .left_link{
   position: absolute;
   transform-origin: left;
-    border-style: solid;
-  border-color: black;
-  border-width: 1px;
+
 }
 .top{
   position: absolute;
   transform-origin: top;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+
 }
 .bottom{
   position: absolute;
@@ -48,9 +42,7 @@
   position: absolute;
   background: url(../images/white_lens_flare.png) bottom right no-repeat, url(../images/lens-flare.png) -230px 0px no-repeat;
   transform-origin: center;
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+
 }
 .subsection {
   margin-bottom: 30px;
@@ -106,11 +98,11 @@
   left:0;
   transform-style:preserve-3d;
   transition:transform 1s ease-in;
-  transform-origin:left;
-  transform:rotateX(0deg) rotateY(-22deg) rotateZ(0deg) scale(1);
+  transform-origin:right;
+  transform:translateZ(100px) rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1);
   z-index:-1;
-  perspective: 2000px;
-  perspective-origin: 171% -5%;
+  /*perspective: 2000px;
+  perspective-origin: 171% 50%;*/
 }
 .rightstate{
   position:absolute;
@@ -118,12 +110,16 @@
   right:0;
   transform-style:preserve-3d;
   transition:transform 1s ease-in;
-  transform-origin:right;
-  transform:rotateX(0deg) rotateY(22deg) rotateZ(0deg) scale(1);
+  transform-origin:left;
+  transform:translateZ(100px) rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1);
   z-index:-1;
-  perspective: 2000px;
-  perspective-origin: -73% -5%;
+  /*perspective: 2000px;
+  perspective-origin: -73% 50%;*/
 }
 .wallhover{
     /*transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);*/
+}
+.main{
+  position:relative;
+  top:65px;
 }
