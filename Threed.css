@@ -2,22 +2,24 @@
   position:relative;
   transform-style:preserve-3d;
   margin-bottom:30px;
-  transition:transform 1s ease-in;
+  transition:transform 1s ease-in, box-shadow 1s ease-in;
   transform-origin:top center;
   transform:rotateY(180deg) rotateZ(0deg) scale(0.6);
+  box-shadow: 0px 5px 70px 10px white;
 }
 .hover{
   transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  box-shadow: 0px 0px 120px 20px white;
 }
 .right, .right_link{
   position: absolute;
   transform-origin: left;
-
+  box-shadow: 0px 0px 120px 10px white;
 }
 .left, .left_link{
   position: absolute;
   transform-origin: left;
-
+  box-shadow: 0px 0px 120px 10px white;
 }
 .top{
   position: absolute;
@@ -101,6 +103,7 @@
   transform-origin:right;
   transform:translateZ(100px) rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1);
   z-index:-1;
+  box-shadow: -50px 0px 100px 10px white;
   /*perspective: 2000px;
   perspective-origin: 171% 50%;*/
 }
@@ -113,6 +116,7 @@
   transform-origin:left;
   transform:translateZ(100px) rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1);
   z-index:-1;
+  box-shadow: 50px 0px 100px 10px white;
   /*perspective: 2000px;
   perspective-origin: -73% 50%;*/
 }

@@ -328,8 +328,8 @@ var Threed = {};
         var containerClass = this.options.container_selector;
         var containerWidth = $(containerClass).outerWidth();
         var scale = this.options.scale;
-        var middleSpace = 3;//px
-        var elementSpace = 3;//px
+        var middleSpace = 6;//px
+        var elementSpace = 10;//px
         var elementTopSpace = 0;
         var elementPrevHeight;
         var originPos = {
@@ -372,12 +372,10 @@ var Threed = {};
                   mouseenter: function() {
                     $(this).addClass("hover");
                     $(this).css("transform","translateX("+(-leftElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
-                    //$(this).css("left",-leftElementOffset);
                     $(this).css("z-index",1000);
                   },
                   mouseleave: function() {
-                    //$(this).removeClass("hover");
-                    // $(this).css("left",leftElementOffset)
+                    $(this).removeClass("hover");
                     $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
                     $(this).css("z-index",999);
 
@@ -399,7 +397,7 @@ var Threed = {};
             elementPrevHeight = $(element).height()*scale;
             $(element).css("right",rightElementOffset);
 
-                        //rebind events
+            //rebind events
             $(element).unbind().bind({
                   click: function() {
                     //$( this ).addClass( "active" );
@@ -407,12 +405,10 @@ var Threed = {};
                   mouseenter: function() {
                     $(this).addClass("hover");
                     $(this).css("transform","translateX("+(rightElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
-                    //$(this).css("left",-leftElementOffset);
                     $(this).css("z-index",1000);
                   },
                   mouseleave: function() {
-                    //$(this).removeClass("hover");
-                    // $(this).css("left",leftElementOffset)
+                    $(this).removeClass("hover");
                     $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
                     $(this).css("z-index",999);
 
@@ -425,7 +421,7 @@ var Threed = {};
     Threed.addSideWalls = function(o){
         this.options={
             container_selector:null,
-            middle_space:3,
+            middle_space:6,
             scale:0.6,
             cube_wall:true,
             initCSS:"",
@@ -463,9 +459,9 @@ var Threed = {};
         this.options.initCSS="rightstate";
         this.options.selector=".right-wall";
         Threed.addThreed(this.options);
-
         $('.leftstate').css("transform","rotateX(5deg) rotateY("+(-rotateY)+"deg)");
         $('.rightstate').css("transform","rotateX(5deg) rotateY("+rotateY+"deg)");
 
+        var top = Math.sin(5*Math.PI/180)*800;
     }
 })(jQuery,Threed);
