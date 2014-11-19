@@ -1,25 +1,45 @@
 .initstate{
   position:relative;
   transform-style:preserve-3d;
-  margin-bottom:30px;
-  transition:transform 1s ease-in, box-shadow 1s ease-in;
+  margin-bottom:10px;
+  transition:transform 1s ease-in,box-shadow 1s ease-in;
   transform-origin:top center;
-  transform:rotateY(180deg) rotateZ(0deg) scale(0.6);
-  box-shadow: 0px 5px 70px 10px white;
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+  box-shadow: 0px 0px 50px 5px white;
 }
 .hover{
+  /*-webkit-animation: sideflip 1s linear;  Chrome, Safari, Opera  
+  animation: sideflip 1s linear;
+  -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera 
+  animation-fill-mode: forwards;*/
   transform:rotateY(0deg) rotateZ(0deg) scale(1);
-  box-shadow: 0px 0px 120px 20px white;
+  box-shadow: 0px 0px 100px 10px white;
+  cursor:pointer;
+}
+.unhover{
+  /*-webkit-animation: sideflipback 1s linear;  Chrome, Safari, Opera 
+  animation: sideflipback 1s linear;
+  -webkit-animation-delay: 2s; /* Chrome, Safari, Opera 
+  animation-delay: 2s;
+  -webkit-animation-fill-mode: forwards; /* Chrome, Safari, Opera 
+  animation-fill-mode: forwards;*/ 
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+  box-shadow: 0px 0px 50px 5px white;
+}
+.active{
+  transform:rotateY(0deg) rotateZ(0deg) scale(1);
+  box-shadow: 0px 0px 100px 10px white;
+  cursor:text;
 }
 .right, .right_link{
   position: absolute;
   transform-origin: left;
-  box-shadow: 0px 0px 120px 10px white;
+  box-shadow: 0px 0px 50px 5px white;
 }
 .left, .left_link{
   position: absolute;
   transform-origin: left;
-  box-shadow: 0px 0px 120px 10px white;
+  box-shadow: 0px 0px 50px 5px white;
 }
 .top{
   position: absolute;
@@ -34,11 +54,22 @@
   position: absolute;
 }
 .front{
+  transition:transform 0.3s ease-in;
   transform: translateZ(-15px) rotateZ(0deg);
 }
 .back h3{
   position: relative;
-  font-size: 48px;
+  font-size: 45px;
+  color:#ff4081;
+  opacity: 1;
+  font-family: polygon;
+  font-weight: normal;
+}
+.back i{
+  position: relative;
+  transform: scale(3);
+  left: 50%;
+  color: #ff4081;
 }
 .cover, .front_link{
   position: absolute;
@@ -125,5 +156,41 @@
 }
 .main{
   position:relative;
-  top:65px;
+}
+.secondary{
+  position:relative;
+  left:20px;
+}
+.third{
+  position:relative;
+  right:20px;
+}
+@font-face {
+   font-family: polygon;
+   src: url(../plugins/customize-font/Polygon-Regular.otf);
+}
+
+/* Animation keyframes*/
+
+/* Chrome, Safari, Opera */ 
+@-webkit-keyframes sideflip {
+    0%   {transform:rotateY(180deg) }
+    100% {transform:rotateY(0deg)}
+}
+
+/* Standard syntax */
+@keyframes sideflip {
+    0%   {transform:rotateY(180deg) scale(1)}
+    100% {transform:rotateY(0deg) scale(1)}
+}
+/* Chrome, Safari, Opera */ 
+@-webkit-keyframes sideflipback {
+    0%   {transform:rotateY(0deg) scale(1)}
+    100% {transform:rotateY(180deg) scale(1)}
+}
+
+/* Standard syntax */
+@keyframes sideflipback {
+    0%   {transform:rotateY(0deg) scale(1)}
+    100% {transform:rotateY(180deg) scale(1)}
 }
