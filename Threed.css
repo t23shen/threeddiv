@@ -1,25 +1,25 @@
 .initstate{
   position:relative;
   transform-style:preserve-3d;
-  margin-bottom:30px;
+  margin-bottom:10px;
   transition:transform 1s ease-in, box-shadow 1s ease-in;
   transform-origin:top center;
-  transform:rotateY(180deg) rotateZ(0deg) scale(0.6);
-  box-shadow: 0px 5px 70px 10px white;
+  transform:rotateY(180deg) rotateZ(0deg) scale(1);
+  box-shadow: 0px 0px 50px 5px white;
 }
 .hover{
   transform:rotateY(0deg) rotateZ(0deg) scale(1);
-  box-shadow: 0px 0px 120px 20px white;
+  box-shadow: 0px 0px 100px 10px white;
 }
 .right, .right_link{
   position: absolute;
   transform-origin: left;
-  box-shadow: 0px 0px 120px 10px white;
+  box-shadow: 0px 0px 50px 5px white;
 }
 .left, .left_link{
   position: absolute;
   transform-origin: left;
-  box-shadow: 0px 0px 120px 10px white;
+  box-shadow: 0px 0px 50px 5px white;
 }
 .top{
   position: absolute;
@@ -38,7 +38,17 @@
 }
 .back h3{
   position: relative;
-  font-size: 48px;
+  font-size: 45px;
+  color:#ff4081;
+  opacity: 1;
+  font-family: polygon;
+  font-weight: normal;
+}
+.back i{
+  position: relative;
+  transform: scale(3);
+  left: 50%;
+  color: #ff4081;
 }
 .cover, .front_link{
   position: absolute;
@@ -125,5 +135,16 @@
 }
 .main{
   position:relative;
-  top:65px;
+}
+.secondary{
+  position:relative;
+  left:20px;
+}
+.third{
+  position:relative;
+  right:20px;
+}
+@font-face {
+   font-family: polygon;
+   src: url(../plugins/customize-font/Polygon-Regular.otf);
 }

@@ -4,7 +4,7 @@ var Threed = {};
     Threed.addThreed = function(o){
         this.options={
             selector:null,
-            backgroundcolor: "rgba(127, 202, 255, 0.3)",
+            backgroundcolor: "#90caf9",
             opacity: 0.5,
             thickness: 30,
             background_image:"",
@@ -36,10 +36,23 @@ var Threed = {};
         var wrapperstate={  width:contentWidth,
                             height:contentHeight
                          };
-        var title = $content.find("h2").text();
+        var title = $content.find("h2").text().toUpperCase();
         var wrapperclass = "cubewrapper_"+index;
         var cubewrapper;
-
+        var backCoverColor = "#90caf9";
+        var iconClass = {
+            "education":"fa fa-graduation-cap",
+            "about":"fa fa-quote-left",
+            "basic":"fa fa-info",
+            "skills":"fa fa-check-square-o",
+            "languages":"fa fa-language",
+            "latest":"fa fa-star",
+            "github":"fa fa-github-alt",
+            "other":"fa fa-reorder",
+            "music":"fa fa-headphones",
+            "work":"fa fa-briefcase",
+            "credits":"fa fa-heart"
+        }
         _initSides();
         _initEvents();
 
@@ -69,6 +82,8 @@ var Threed = {};
             var bottom = $('<div></div>').addClass("bottom").appendTo(cubewrapper);
             var back = $('<div></div>').addClass("back").appendTo(cubewrapper);
             if(isbackcovered){
+                var icon = iconClass[title.toLowerCase().split(" ")[0]];
+                $('<i class="'+icon+'"></i>').appendTo(back);
                 $('<h3>'+title+'</h3>').appendTo(back);
             }
             var cover = $('<div></div>').addClass("cover").appendTo(cubewrapper);
@@ -179,10 +194,11 @@ var Threed = {};
                     transform_origin = "center";
                     if(isbackcovered){
                         var innerHeight = $(selector+space+"h3").innerHeight(); 
-                        opacity = 1;
-                        backgroundcolor = "rgba(127, 202, 255, 0.96)";
+                        opacity = 0.95;
+                        backgroundcolor = backCoverColor;
                         $(selector+space+"h3").css("text-align","center");
                         $(selector+space+"h3").css("top",(height/2)-innerHeight);
+                        $(selector+space+"i").css("top",(height/2)-innerHeight);
                     }
                     break;
                 case "cover":
@@ -444,6 +460,7 @@ var Threed = {};
         var wallHeight = $(containerClass+" .row").height();
         var wallLength = 800;
         var rotateY = Math.atan((($(containerClass+" .row").width()-(leftRealWidth+rightRealWidth+middleSpace*2))/2)/wallLength)*(180/Math.PI);
+        var rotateX = 5;
 
         $("<div></div>").addClass("left-wall").css({width:wallWidth,
                                                     height:wallHeight
@@ -462,6 +479,124 @@ var Threed = {};
         $('.leftstate').css("transform","rotateX(5deg) rotateY("+(-rotateY)+"deg)");
         $('.rightstate').css("transform","rotateX(5deg) rotateY("+rotateY+"deg)");
 
-        var top = Math.sin(5*Math.PI/180)*800;
+        // Ajusting the container position respect to the wall
+        // The five pixels are the offset
+        var top = (Math.sin(rotateX*Math.PI/180)*wallLength)+5;
+        $('.main').css("top",top);
+    }
+
+    Threed.correctSpacing = function(o){
+        this.options={
+            container_selector:null,
+            scale:1
+        }
+
+        $.extend(this.options,o);
+
+        // Defining global variables
+        var containerClass = this.options.container_selector;
+        var containerWidth = $(containerClass).outerWidth();
+        var scale = this.options.scale;
+        var middleSpace = 6;//px
+        var elementSpace = 10;//px
+        var elementTopSpace = 0;
+        var elementPrevHeight;
+
+        // Defining jQuery Objects
+        $leftColumn = $(containerClass+' .secondary');
+        $rightColumn = $(containerClass+' .third');
+        $middleColumn = $(containerClass+ ' .primary');
+ 
+        // Correcting Left Col ELement's positions
+        $leftColumn.children().each(function(index,element){
+            var elementPositionTop = $(element).position().top;
+            // First element
+            if(elementPositionTop!=0){
+                elementTopSpace= elementTopSpace+elementPrevHeight+elementSpace;
+                $(element).css("top",-(elementPositionTop-elementTopSpace));
+            }
+            elementPrevHeight = $(element).height()*scale;
+            $(element).css("left",30-middleSpace);
+
+            //rebind events
+ /*           $(element).unbind().bind({
+                  click: function() {
+                    //$( this ).addClass( "active" );
+                  },
+                  mouseenter: function() {
+                    $(this).addClass("hover");
+                    $(this).css("transform","translateX("+(-leftElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
+                    $(this).css("z-index",1000);
+                  },
+                  mouseleave: function() {
+                    $(this).removeClass("hover");
+                    $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
+                    $(this).css("z-index",999);
+
+                  }
+                });*/
+        });
+
+        // Correcting Right Col ELement's positions
+        elementTopSpace = 0; //Reset variable to 0
+        $rightColumn.children().each(function(index,element){
+            var elementPositionTop = $(element).position().top;
+            // First element
+            if(elementPositionTop!=0){
+                elementTopSpace=elementTopSpace+elementPrevHeight+elementSpace;
+                $(element).css("top",-(elementPositionTop-elementTopSpace));
+            }
+            elementPrevHeight = $(element).height()*scale;
+            $(element).css("right",30-middleSpace);
+
+            //rebind events
+/*            $(element).unbind().bind({
+                  click: function() {
+                    //$( this ).addClass( "active" );
+                  },
+                  mouseenter: function() {
+                    $(this).addClass("hover");
+                    $(this).css("transform","translateX("+(rightElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
+                    $(this).css("z-index",1000);
+                  },
+                  mouseleave: function() {
+                    $(this).removeClass("hover");
+                    $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
+                    $(this).css("z-index",999);
+
+                  }
+                });*/
+        });
+
+        // Correcting middle Col ELement's positions
+        elementTopSpace = 0; //Reset variable to 0
+        $middleColumn.children().each(function(index,element){
+            var elementPositionTop = $(element).position().top;
+            // First element
+            if(elementPositionTop!=0){
+                elementTopSpace=elementTopSpace+elementPrevHeight+elementSpace;
+                $(element).css("top",-(elementPositionTop-elementTopSpace));
+            }
+            elementPrevHeight = $(element).height()*scale;
+
+            //rebind events
+/*            $(element).unbind().bind({
+                  click: function() {
+                    //$( this ).addClass( "active" );
+                  },
+                  mouseenter: function() {
+                    $(this).addClass("hover");
+                    $(this).css("transform","translateX("+(rightElementOffset)+"px) rotateY(0deg) rotateZ(0deg) scale(1)");
+                    $(this).css("z-index",1000);
+                  },
+                  mouseleave: function() {
+                    $(this).removeClass("hover");
+                    $(this).css("transform","translateX(0px) rotateY(180deg) rotateZ(0deg) scale(0.6)");
+                    $(this).css("z-index",999);
+
+                  }
+                });*/
+        });
+
     }
 })(jQuery,Threed);
