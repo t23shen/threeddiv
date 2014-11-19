@@ -2,7 +2,11 @@
   position:relative;
   transform-style:preserve-3d;
   margin-bottom:10px;
+<<<<<<< HEAD
   transition:transform 1s ease-in,box-shadow 1s ease-in;
+=======
+  transition:transform 1s ease-in, box-shadow 1s ease-in;
+>>>>>>> 13e07007c0f5e5675346d1d43b9454a8e4b6c007
   transform-origin:top center;
   transform:rotateY(180deg) rotateZ(0deg) scale(1);
   box-shadow: 0px 0px 50px 5px white;
@@ -29,7 +33,10 @@
 .active{
   transform:rotateY(0deg) rotateZ(0deg) scale(1);
   box-shadow: 0px 0px 100px 10px white;
+<<<<<<< HEAD
   cursor:text;
+=======
+>>>>>>> 13e07007c0f5e5675346d1d43b9454a8e4b6c007
 }
 .right, .right_link{
   position: absolute;
@@ -168,6 +175,7 @@
 @font-face {
    font-family: polygon;
    src: url(../plugins/customize-font/Polygon-Regular.otf);
+<<<<<<< HEAD
 }
 
 /* Animation keyframes*/
@@ -193,4 +201,6 @@
 @keyframes sideflipback {
     0%   {transform:rotateY(0deg) scale(1)}
     100% {transform:rotateY(180deg) scale(1)}
+=======
+>>>>>>> 13e07007c0f5e5675346d1d43b9454a8e4b6c007
 }
