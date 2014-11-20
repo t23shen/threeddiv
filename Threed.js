@@ -114,6 +114,8 @@ var Threed = {};
                   }
                 });
             }else{
+                var isended = false;
+                var isleft = false;
                 cubewrapper.bind({
                   click: function() {
                     $(this).removeClass("hover");
@@ -121,22 +123,33 @@ var Threed = {};
                     $(elementSelector).css("transform","translateZ(1px)");
                   },
                   mouseenter: function() {
-                    $(this).addClass("hover");
-                    //$(this).removeClass("unhover");
-                    $(this).css("z-index",1000);
+                    if(!$(this).hasClass("hover") && !$(this).hasClass("unhover")){
+                        $(this).removeClass("unhover").addClass("hover");
+                        isleft=false;
+                    }
                   },
                   mouseleave: function() {
-                    //$(this).removeClass("hover");
-                    //$(this).addClass("unhover");
-                    /*if(isended){
+                    isleft = true;
+                    if(isended){
                         $(this).removeClass("hover");
-                        $(this).css("z-index",999);
+                        $(this).addClass("unhover");
                         isended=false;
-                    }*/
+                        isleft=false;
+                    }
                   }
                 });
-                cubewrapper.bind('transitionend',function(){
-                    $(this).removeClass('hover');
+                cubewrapper.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend',function(e){
+                    if($(this).hasClass('hover')){
+                        isended=true;
+                    }
+                    if($(this).hasClass("unhover")){
+                        $(this).removeClass("unhover");
+                    }else if(isleft){
+                        $(this).addClass("unhover");
+                        $(this).removeClass("hover");
+                        isended=true;
+                        isleft=false;
+                    }
                 });
             }
         }
