@@ -116,42 +116,198 @@ var Threed = {};
             }else{
                 var isended = false;
                 var isleft = false;
+                var hoverclass = "hover";
+                var unhoverclass = "unhover";
+                var hoverstyle = _getStyleRuleStyle(".hover", document.styleSheets[7]);
+                var unhoverstyle = _getStyleRuleStyle(".unhover", document.styleSheets[7]);
+                var iscomplete = false;
+                // Deciding which direction is the cursor moving
+                $.mousedirection();
+                cubewrapper.bind({
+                  mousedirection: function(e){
+                    switch(e.direction){
+                        case "left":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="leftflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="leftflip";
+                                }
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="leftflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="leftflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "right":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="rightflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="rightflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="rightflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="rightflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "top":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="topflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="topflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="leftflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="topflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "down":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="topflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="topflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="leftflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="topflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "bottom-left":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="leftflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="leftflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="leftflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="leftflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "top-right":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="rightflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="rightflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="rightflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="rightflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "top-left":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="leftflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="leftflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="leftflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="leftflipback";
+                                }
+                                iscomplete = false;
+                            }
+                            break;
+                        case "bottom-right":
+                            if(iscomplete){
+                                if(!!hoverstyle["animationname"]){
+                                    hoverstyle["animationname"]="rightflip";
+                                }else if(!!hoverstyle["webkitAnimationName"]){
+                                    hoverstyle["webkitAnimationName"]="rightflip";
+                                }
+
+                                if(!!unhoverstyle["animationname"]){
+                                    unhoverstyle["animationname"]="rightflipback";
+                                }else if(!!unhoverstyle["webkitAnimationName"]){
+                                    unhoverstyle["webkitAnimationName"]="rightflipback";
+                                }
+                                iscomplete = false;
+                            }
+                        break;
+                        }
+                    }
+                });
                 cubewrapper.bind({
                   click: function() {
-                    $(this).removeClass("hover");
+                    $(this).removeClass(hoverclass);
                     $(this).addClass("active");
                     $(elementSelector).css("transform","translateZ(1px)");
                   },
                   mouseenter: function() {
-                    if(!$(this).hasClass("hover") && !$(this).hasClass("unhover")){
-                        $(this).removeClass("unhover").addClass("hover");
-                        isleft=false;
+                    if(!$(this).hasClass(hoverclass) && !$(this).hasClass(unhoverclass)){
+                        $(this).removeClass(unhoverclass).addClass(hoverclass);
+                        isended=false;
                     }
                   },
                   mouseleave: function() {
                     isleft = true;
                     if(isended){
-                        $(this).removeClass("hover");
-                        $(this).addClass("unhover");
+                        $(this).removeClass(hoverclass);
+                        $(this).addClass(unhoverclass);
                         isended=false;
                         isleft=false;
                     }
                   }
                 });
                 cubewrapper.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend',function(e){
-                    if($(this).hasClass('hover')){
+                    if($(this).hasClass(hoverclass)){
                         isended=true;
                     }
-                    if($(this).hasClass("unhover")){
-                        $(this).removeClass("unhover");
+                    if($(this).hasClass(unhoverclass)){
+                        $(this).removeClass(unhoverclass);
+                        iscomplete = true;
                     }else if(isleft){
-                        $(this).addClass("unhover");
-                        $(this).removeClass("hover");
+                        $(this).addClass(unhoverclass);
+                        $(this).removeClass(hoverclass);
                         isended=true;
                         isleft=false;
                     }
                 });
             }
+        }
+
+        function _getStyleRuleStyle(selector, sheet) {
+            var sheets = typeof sheet !== 'undefined' ? [sheet] : document.styleSheets;
+            for (var i = 0, l = sheets.length; i < l; i++) {
+                var sheet = sheets[i];
+                if( !sheet.cssRules ) { continue; }
+                for (var j = 0, k = sheet.cssRules.length; j < k; j++) {
+                    var rule = sheet.cssRules[j];
+                    if (rule.selectorText && rule.selectorText.split(',').indexOf(selector) !== -1) {
+                        return rule.style;
+                    }
+                }
+            }
+            return null;
         }
 
         function addCubeLinker(item){
