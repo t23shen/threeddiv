@@ -118,152 +118,33 @@ var Threed = {};
                 var isleft = false;
                 var hoverclass = "hover";
                 var unhoverclass = "unhover";
-                var hoverstyle = _getStyleRuleStyle(".hover", document.styleSheets[7]);
-                var unhoverstyle = _getStyleRuleStyle(".unhover", document.styleSheets[7]);
-                var iscomplete = false;
-                // Deciding which direction is the cursor moving
-                $.mousedirection();
-                cubewrapper.bind({
-                  mousedirection: function(e){
-                    switch(e.direction){
-                        case "left":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="leftflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="leftflip";
-                                }
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="leftflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="leftflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "right":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="rightflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="rightflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="rightflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="rightflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "top":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="topflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="topflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="leftflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="topflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "down":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="topflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="topflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="leftflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="topflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "bottom-left":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="leftflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="leftflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="leftflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="leftflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "top-right":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="rightflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="rightflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="rightflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="rightflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "top-left":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="leftflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="leftflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="leftflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="leftflipback";
-                                }
-                                iscomplete = false;
-                            }
-                            break;
-                        case "bottom-right":
-                            if(iscomplete){
-                                if(!!hoverstyle["animationname"]){
-                                    hoverstyle["animationname"]="rightflip";
-                                }else if(!!hoverstyle["webkitAnimationName"]){
-                                    hoverstyle["webkitAnimationName"]="rightflip";
-                                }
-
-                                if(!!unhoverstyle["animationname"]){
-                                    unhoverstyle["animationname"]="rightflipback";
-                                }else if(!!unhoverstyle["webkitAnimationName"]){
-                                    unhoverstyle["webkitAnimationName"]="rightflipback";
-                                }
-                                iscomplete = false;
-                            }
-                        break;
-                        }
-                    }
+                var scrollclass = "scrolled";
+                var activeclass = "active";
+                var isscrolled = true;
+                $(window).scroll(function(){
+                    cubewrapper.trigger("change");
                 });
                 cubewrapper.bind({
+                  change: function(){
+                    var scrollPos = $(window).scrollTop();
+                    if(scrollPos == 0){
+                        //reset scroll when scroll to the top again;
+                        isscrolled = true;
+                    }
+                    if(isscrolled && scrollPos >= $(this).offset().top && !$(this).hasClass(hoverclass) && !$(this).hasClass(unhoverclass)){
+                        $(this).addClass(scrollclass);
+                        isscrolled = false;
+                    }
+                  },
                   click: function() {
-                    $(this).removeClass(hoverclass);
-                    $(this).addClass("active");
-                    $(elementSelector).css("transform","translateZ(1px)");
+                        $(this).removeClass(hoverclass);
+                        $(this).removeClass(unhoverclass);
+                        $(this).unbind("mouseenter").unbind("mouseleave").unbind("change");
+                        $(this).addClass(activeclass);
+                        $(elementSelector).css("transform","translateZ(1px)");
                   },
                   mouseenter: function() {
-                    if(!$(this).hasClass(hoverclass) && !$(this).hasClass(unhoverclass)){
+                    if(!$(this).hasClass(hoverclass) && !$(this).hasClass(unhoverclass) && !$(this).hasClass(scrollclass)){
                         $(this).removeClass(unhoverclass).addClass(hoverclass);
                         isended=false;
                     }
@@ -279,18 +160,21 @@ var Threed = {};
                   }
                 });
                 cubewrapper.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend',function(e){
-                    if($(this).hasClass(hoverclass)){
-                        isended=true;
-                    }
-                    if($(this).hasClass(unhoverclass)){
-                        $(this).removeClass(unhoverclass);
-                        iscomplete = true;
-                    }else if(isleft){
-                        $(this).addClass(unhoverclass);
-                        $(this).removeClass(hoverclass);
-                        isended=true;
-                        isleft=false;
-                    }
+                    $(this).removeClass(scrollclass);
+                   // if(!$(this).hasClass("active")){
+                        if($(this).hasClass(hoverclass)){
+                            isended=true;
+                        }
+                        if($(this).hasClass(unhoverclass)){
+                            $(this).removeClass(unhoverclass);
+                            //iscomplete = true;
+                        }else if(isleft){
+                            $(this).addClass(unhoverclass);
+                            $(this).removeClass(hoverclass);
+                            isended=true;
+                            isleft=false;
+                        }
+                   // }
                 });
             }
         }
